@@ -1,0 +1,43 @@
+# Dos instancias de MySQL para poder probar la selección de conexión.
+#   mysql-dev  -> localhost:3306
+#   mysql-test -> localhost:3307
+services:
+  mysql-dev:
+    image: mysql:8.4
+    container_name: mcp-mysql-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DEV_ROOT_PASSWORD:-devpassword}
+      MYSQL_DATABASE: ${MYSQL_DEV_DATABASE:-appdb}
+    ports:
+      - "${MYSQL_DEV_PORT:-3306}:3306"
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  mysql-test:
+    image: mysql:8.4
+    container_name: mcp-mysql-test
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_TEST_ROOT_PASSWORD:-testpassword}
+      MYSQL_DATABASE: ${MYSQL_TEST_DATABASE:-testdb}
+    ports:
+      - "${MYSQL_TEST_PORT:-3307}:3306"
+    volumes:
+      - mysql_test_data:/var/lib/mysql
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysql_dev_data:
+  mysql_test_data:

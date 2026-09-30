@@ -1,0 +1,37 @@
+{
+  "name": "mcp-mysql-database",
+  "version": "1.0.0",
+  "description": "Servidor MCP para MySQL: conecta Claude con bases de datos MySQL locales (Docker) en lenguaje natural",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "node --test test/e2e.test.mjs",
+    "build": "tsc -p .",
+    "start": "node dist/index.js",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Esaban17/mcp-mysql-database.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Esaban17/mcp-mysql-database/issues"
+  },
+  "homepage": "https://github.com/Esaban17/mcp-mysql-database#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "mysql2": "^3.24.5",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "typescript": "^7.0.2"
+  },
+  "type": "module",
+  "bin": {
+    "mcp-mysql-database": "dist/index.js"
+  }
+}
