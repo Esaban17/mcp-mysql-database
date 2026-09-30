@@ -1,0 +1,28 @@
+{
+  "manifest_version": "0.3",
+  "name": "mcp-mysql-database",
+  "display_name": "MySQL",
+  "version": "1.0.0",
+  "description": "Conecta Claude con bases de datos MySQL: crea bases y tablas, consulta y modifica registros, y elige la conexión activa.",
+  "author": { "name": "Esaban17" },
+  "repository": { "type": "git", "url": "https://github.com/Esaban17/mcp-mysql-database" },
+  "license": "MIT",
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"],
+      "env": { "MYSQL_MCP_CONFIG": "${user_config.connections_file}" }
+    }
+  },
+  "user_config": {
+    "connections_file": {
+      "type": "file",
+      "title": "Archivo de conexiones",
+      "description": "Ruta a tu connections.json (ver connections.example.json).",
+      "required": true
+    }
+  },
+  "compatibility": { "runtimes": { "node": ">=20" } }
+}

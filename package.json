@@ -8,7 +8,8 @@
     "build": "tsc -p .",
     "start": "node dist/index.js",
     "db:up": "docker compose up -d --wait",
-    "db:down": "docker compose down"
+    "db:down": "docker compose down",
+    "pack:mcpb": "npm run build && rm -rf .mcpb-build && mkdir .mcpb-build && cp -R dist package.json package-lock.json manifest.json LICENSE .mcpb-build/ && npm ci --omit=dev --ignore-scripts --prefix .mcpb-build && npx -y @anthropic-ai/mcpb pack .mcpb-build mysql.mcpb && rm -rf .mcpb-build"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Esaban17/mcp-mysql-database/issues"
   },

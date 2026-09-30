@@ -30,15 +30,22 @@ npm run build
 claude mcp add mysql -- node /ruta/absoluta/mcp-mysql-database/dist/index.js
 ```
 
-**Claude Desktop** — en `claude_desktop_config.json`:
+**Claude Desktop** — como extensión (recomendado):
 
-```json
-{
-  "mcpServers": {
-    "mysql": { "command": "node", "args": ["/ruta/absoluta/mcp-mysql-database/dist/index.js"] }
-  }
-}
+```bash
+cp connections.example.json connections.json   # ajusta hosts, puertos y contraseñas
+npm run pack:mcpb                               # genera mysql.mcpb
+open mysql.mcpb                                 # abre el instalador en Claude Desktop
 ```
+
+Pulsa **Instalar**, en **Archivo de conexiones** elige la ruta absoluta de tu `connections.json`, **Guardar**
+y activa la extensión (Configuración → Extensiones). El paquete solo lleva `dist/` y las dependencias de
+producción; tus credenciales se quedan en `connections.json`. Tras cambiar el código, vuelve a empaquetar e instalar.
+
+> Evita editar `claude_desktop_config.json` a mano con la app abierta: Claude Desktop reescribe ese archivo
+> mientras corre y puede descartar tu entrada en `mcpServers`.
+
+**Puerto 3306 ocupado** (p. ej. un MySQL de Homebrew): pon `MYSQL_DEV_PORT=3316` en `.env` y usa ese puerto en `connections.json`.
 
 ## Conexiones
 
@@ -87,6 +94,7 @@ Todas las herramientas de datos aceptan un `database` opcional para no depender 
 npm run build      # compila TypeScript a dist/
 npm test           # prueba e2e: lanza el servidor por stdio con un cliente MCP real
 npm run db:down    # detiene los contenedores (los datos persisten en volúmenes)
+npm run pack:mcpb  # empaqueta la extensión de Claude Desktop (mysql.mcpb)
 ```
 
 `npm test` necesita MySQL en 3306 y 3307 (`npm run db:up`); si no están accesibles, las pruebas se omiten.
