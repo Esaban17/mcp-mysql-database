@@ -1,0 +1,29 @@
+{
+  "default": "dev",
+  "connections": {
+    "dev": {
+      "host": "127.0.0.1",
+      "port": 3306,
+      "user": "root",
+      "password": "devpassword",
+      "database": "appdb",
+      "description": "MySQL de desarrollo (docker: mcp-mysql-dev)"
+    },
+    "test": {
+      "host": "127.0.0.1",
+      "port": 3307,
+      "user": "root",
+      "passwordEnv": "MYSQL_TEST_ROOT_PASSWORD",
+      "database": "testdb",
+      "description": "MySQL de pruebas (docker: mcp-mysql-test)"
+    },
+    "produccion-readonly": {
+      "host": "db.ejemplo.com",
+      "port": 3306,
+      "user": "lector",
+      "passwordEnv": "MYSQL_PROD_PASSWORD",
+      "readOnly": true,
+      "description": "Ejemplo de conexión de solo lectura"
+    }
+  }
+}
